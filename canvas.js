@@ -59,7 +59,7 @@ window.onload = () => {
                     ctx.clearRect(0, 0, w, 130)
                     drawImage(ctx,'img/explosion_min.png', wR-50, 0)
                     setTimeout(() => {
-                        console.log('left clear')
+                        console.log('right clear')
                         ctx.clearRect(0, 0, w, 133)
                     }, 100)
                     }
