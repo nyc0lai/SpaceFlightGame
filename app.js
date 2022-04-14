@@ -7,9 +7,12 @@ let game = new Game (
                 new Missile()
             ]
         ),
+        // null,
         [
             new Rock(),
             new Rock()
         ]
     )
 )
+
+game.start()
