@@ -2,11 +2,21 @@
     box-sizing: border-box;
 }
 body{
-    margin:0;
-    background-color: #223;
 
+    background-color: #223;
 }
+
+#container {
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+}
+
 #flyGame {
+    align-items: center;
+    border: 2px solid dodgerblue;
+    border-radius: 10px;
     background-color: #112;
+    box-shadow: 10px 10px 10px rgb(9, 23, 143);
 
 }
