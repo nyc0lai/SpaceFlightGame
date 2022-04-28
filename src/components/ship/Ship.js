@@ -1,6 +1,6 @@
 
 class Ship extends HasCoordinate {
-    constructor(missile = [], x=0.5, y=0.83, speedX=0, speedY=0, damage = 0.0) {
+    constructor(missile = [], x=0.5, y=0.83, speedX=0.05, speedY=0.05, damage = 0.0) {
         super(x,y,speedX,speedY)   
         this.missile = missile    
         this.damage = damage
@@ -11,28 +11,32 @@ class Ship extends HasCoordinate {
 
     render(ctx) {
         this.visible && drawImage(ctx, this.x, this.y, this.url)
-
         this.missile.forEach(missile => missile.render(ctx))
     }
 
     flyRight() {
-        this.x += 0.05
+        if(this.x <= 0.8){
+        this.x += this.speedX}
     }
-
     flyLeft() {
-        this.x -= 0.05
+        if(this.x >= 0)
+        this.x -= this.speedX
     }
     flyUp() {
-        this.y -= 0.05
+        if(this.y >= 0.25)
+        this.y -= this.speedY
     }
-
     flyDown() {
-        this.y += 0.05
+        if(this.y <= 0.8)
+        this.y += this.speedY
     }
     fire() {
-        //this.missile[0].visible = true
-        let missile = this.missile.pop()
-        missile.visible = true
-        game.space.missile.push(missile)
+            let missile = this.missile.pop()
+            missile.fire(this.x, this.y)
+            return missile
+    }
+
+    step() {
+
     }
 }

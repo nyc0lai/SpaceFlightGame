@@ -1,13 +1,13 @@
 
 class Game {
-    constructor(state = 'started', space = null){
-        this.state = state;
+    constructor(space = null){
         this.space = space;
-        //canvas initialisation
+                                                                             //canvas initialisation
         let canvas = window['flyGame'];
         this.ctx = canvas.getContext("2d"); 
         this.w = window.innerWidth;
         this.h = window.innerHeight;
+        this.FPS = 15;
         
     }
 
@@ -17,12 +17,44 @@ class Game {
     }
 
     start() {
-            document.body.addEventListener('keydown', this.action.bind(this))
-            this.render()
+            this.rockTimer = setInterval((count = randcountOfRock(1,3)) => { //random rock adding over each three seconds
+            let i = 0;
+            while (i<count) {
+                this.space.rock.unshift(new Rock)
+                i++
+                }  
+            }, 3000)
+
+    document.body.addEventListener('keydown', this.action.bind(this))        // EventListener for keydown
+                this.timer = setInterval(() => {
+                this.step()
+            }, 1000 / this.FPS);
+
+    }
+
+    stop() {
+        clearInterval(this.timer)
+        clearInterval(this.rockTimer)
+    }
+
+    gameOver() {
+        this.stop()
+        setTimeout(() => {
+            textGameOver(this.ctx)                                           //GameOver TEXT
+            }, 50);
+        }
+
+    step() {
+        this.space.step()
+        let collisions = this.space.rockToShipCollision()
+            if(collisions.length > 0){
+                this.gameOver()
+            }
+        this.space.missileToRockCollision()
+        this.render()
     }
 
     action(e) {
-        // console.log(e)
         switch(e.code) {
             case 'ArrowRight': 
                 this.space.ship.flyRight()
@@ -37,10 +69,10 @@ class Game {
                 this.space.ship.flyDown()
                 break;
             case 'Space':
-                this.space.ship.fire()
+                let missile = this.space.ship.fire()
+                this.space.missile.push(missile)
                 break; 
         }
-        this.render()
     }
 
 }
